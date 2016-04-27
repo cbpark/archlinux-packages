@@ -1,12 +1,11 @@
 pkgbase = softsusy
-	pkgdesc = This program provides a SUSY spectrum in the NMSSM, or the MSSM including flavour violation and with or without R-parity consistent with input Standard Model fermion mass/mixings and electroweak/strong coupling data.
+	pkgdesc = package to provide a SUSY spectrum.
 	pkgver = 3.7.1
 	pkgrel = 1
 	url = http://softsusy.hepforge.org
 	arch = i686
 	arch = x86_64
 	license = GPL
-	depends = gcc
 	depends = gcc-fortran
 	source = http://www.hepforge.org/archive/softsusy/softsusy-3.7.1.tar.gz
 	sha256sums = 6811c4e167c0f832477e20755ecbddb30711d1d1a53267646715221e1d3de585
