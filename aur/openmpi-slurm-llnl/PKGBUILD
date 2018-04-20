@@ -1,0 +1,61 @@
+# Maintainer: Chan Beom Park <cbpark@gmail.com>
+
+_pkgname=openmpi
+pkgname=openmpi-slurm-llnl
+pkgver=3.0.1
+pkgrel=1
+pkgdesc='High performance message passing library (MPI) integrated with Slurm'
+url='https://www.open-mpi.org'
+arch=('x86_64')
+license=('custom:OpenMPI')
+conflicts=('openmpi')
+depends=('libltdl' 'hwloc' 'openssh' 'zlib' 'libevent' 'pmix' 'slurm-llnl')
+makedepends=('inetutils' 'valgrind' 'gcc-fortran')
+optdepends=('gcc-fortran: fortran support')
+options=('staticlibs')
+source=(https://www.open-mpi.org/software/ompi/v${pkgver%.*}/downloads/${_pkgname}-${pkgver}.tar.bz2)
+sha512sums=('15fad504ba743d564e7196b62a112027798d4b26e9c8d11d9c1c00ac2968f1858ebc168df30473104c5a31f71e38ab558204b598260b535a12b6094aa77182b8')
+
+build() {
+  cd ${_pkgname}-${pkgver}
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc/${_pkgname} \
+    --enable-mpi-fortran=all \
+    --libdir=/usr/lib/${_pkgname} \
+    --with-threads=posix \
+    --enable-mpi-thread-multiple \
+    --enable-smp-locks \
+    --enable-builtin-atomics \
+    --enable-mpi-cxx \
+    --with-valgrind \
+    --enable-memchecker \
+    --enable-pretty-print-stacktrace \
+    --with-slurm \
+    --with-pmix=/usr \
+    --with-libevent=/usr \
+    --with-hwloc=/usr \
+    --with-libltdl=/usr  \
+    FC=/usr/bin/gfortran \
+    LDFLAGS="${LDFLAGS} -Wl,-z,noexecstack"
+  make
+}
+
+check() {
+  cd ${_pkgname}-${pkgver}
+  make check
+}
+
+package() {
+  cd ${_pkgname}-${pkgver}
+  make DESTDIR="${pkgdir}" install
+
+  # FS#28583
+  install -dm 755 "${pkgdir}/usr/lib/pkgconfig"
+  for i in ompi-c.pc ompi-cxx.pc ompi-f77.pc ompi-f90.pc ompi.pc; do
+    ln -sf "/usr/lib/openmpi/pkgconfig/${i}" "${pkgdir}/usr/lib/pkgconfig/"
+  done
+
+  install -dm 755 "${pkgdir}/etc/ld.so.conf.d"
+  echo "/usr/lib/${_pkgname}" > "${pkgdir}"/etc/ld.so.conf.d/${_pkgname}.conf
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${_pkgname}"
+}

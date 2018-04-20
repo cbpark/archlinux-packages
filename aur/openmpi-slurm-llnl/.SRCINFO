@@ -1,0 +1,25 @@
+pkgbase = openmpi-slurm-llnl
+	pkgdesc = High performance message passing library (MPI) integrated with Slurm
+	pkgver = 3.0.1
+	pkgrel = 1
+	url = https://www.open-mpi.org
+	arch = x86_64
+	license = custom:OpenMPI
+	makedepends = inetutils
+	makedepends = valgrind
+	makedepends = gcc-fortran
+	depends = libltdl
+	depends = hwloc
+	depends = openssh
+	depends = zlib
+	depends = libevent
+	depends = pmix
+	depends = slurm-llnl
+	optdepends = gcc-fortran: fortran support
+	conflicts = openmpi
+	options = staticlibs
+	source = https://www.open-mpi.org/software/ompi/v3.0/downloads/openmpi-3.0.1.tar.bz2
+	sha512sums = 15fad504ba743d564e7196b62a112027798d4b26e9c8d11d9c1c00ac2968f1858ebc168df30473104c5a31f71e38ab558204b598260b535a12b6094aa77182b8
+
+pkgname = openmpi-slurm-llnl
+
