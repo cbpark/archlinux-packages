@@ -2,7 +2,7 @@
 
 _pkgname=openmpi
 pkgname=openmpi-slurm-llnl
-pkgver=3.1.0
+pkgver=3.1.3
 pkgrel=1
 pkgdesc='High performance message passing library (MPI) integrated with Slurm'
 url='https://www.open-mpi.org'
@@ -14,8 +14,8 @@ makedepends=('inetutils' 'valgrind' 'gcc-fortran')
 optdepends=('gcc-fortran: fortran support')
 options=('staticlibs')
 source=(https://www.open-mpi.org/software/ompi/v${pkgver%.*}/downloads/${_pkgname}-${pkgver}.tar.bz2)
-sha256sums=('b25c044124cc859c0b4e6e825574f9439a51683af1950f6acda1951f5ccdf06c')
-sha512sums=('23a43a16683c4b56f96c711fe009d992f3bd4e10cf9ef55091865a5b1aed195cc1de6a87720564f70d3b60a2441966bab39cda8969293aeb118cda10aead3dee')
+sha256sums=('8be04307c00f51401d3fb9d837321781ea7c79f2a5a4a2e5d4eaedc874087ab6')
+sha512sums=('700821df676de5f85ce2793298242dcaea73f585f89540e30999792a568f193545a9f9b2bcb3ea22effa3bf14744531c4eb5fc4c84a8d7bbe5e5fdd76ab3a04a')
 
 build() {
   cd ${_pkgname}-${pkgver}
@@ -60,5 +60,3 @@ package() {
   echo "/usr/lib/${_pkgname}" > "${pkgdir}"/etc/ld.so.conf.d/${_pkgname}.conf
   install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${_pkgname}"
 }
-
-# vim: ts=2 sw=2 et:
