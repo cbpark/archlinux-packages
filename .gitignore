@@ -3,4 +3,5 @@ pkg
 src
 *.tar.gz
 *.tar.bz2
+*.zst
 *.rpm
